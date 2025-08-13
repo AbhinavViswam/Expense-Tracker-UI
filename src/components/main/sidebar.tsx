@@ -7,8 +7,8 @@ import {
   ChevronLeft,
   ChevronRight,
   LayoutDashboard,
-  CreditCard,
-  Folder,
+  Wallet,
+  Boxes,
   User,
   LogOut,
 } from "lucide-react";
@@ -20,8 +20,8 @@ interface Isidebar {
 
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/main" },
-  { name: "Wallet", icon: CreditCard, path: "/main/wallet" },
-  { name: "Category", icon: Folder, path: "/main/category" },
+  { name: "Wallet", icon: Wallet, path: "/main/wallet" },
+  { name: "Category", icon: Boxes, path: "/main/category" },
   { name: "Account", icon: User, path: "/main/account" },
 ];
 
@@ -50,7 +50,7 @@ const Sidebar = ({ user, refetch }: Isidebar) => {
       {/* Collapse Toggle */}
       <div className="flex justify-end p-2">
         <button
-          className="btn btn-xs btn-ghost text-emerald-500 hover:bg-emerald-50"
+          className="btn btn-xs btn-ghost bg-white text-emerald-500 hover:bg-emerald-50 border-none"
           onClick={() => setCollapsed(!collapsed)}
         >
           {collapsed ? <ChevronRight /> : <ChevronLeft />}

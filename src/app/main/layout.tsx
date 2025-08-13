@@ -17,7 +17,7 @@ export default function MainLayout({
       <Sidebar user={user} refetch={refetch} />
 
       {/* Main Content */}
-      <div className="flex-1 bg-gray-50 p-6 overflow-auto text-black">{children}</div>
+      <div className="flex-1 bg-white overflow-auto text-black">{children}</div>
     </div>
   );
 }
