@@ -5,7 +5,7 @@ export interface ILogin {
 
 export interface ISignup {
   name: String;
-  phone: Number;
+  phone: Number | string;
   email: String;
   password: String;
 }
