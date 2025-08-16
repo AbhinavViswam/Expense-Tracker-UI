@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Wallet,
   Boxes,
+  BadgeIndianRupee,
   User,
   LogOut,
 } from "lucide-react";
@@ -21,6 +22,7 @@ interface Isidebar {
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/main" },
   { name: "Wallet", icon: Wallet, path: "/main/wallet" },
+  { name: "Expenses", icon: BadgeIndianRupee, path: "/main/expense" },
   { name: "Category", icon: Boxes, path: "/main/category" },
   { name: "Account", icon: User, path: "/main/account" },
 ];
@@ -106,7 +108,8 @@ const Sidebar = ({ user, refetch }: Isidebar) => {
           disabled={logoutMutation.isPending}
         >
           <LogOut size={20} />
-          {!collapsed && (logoutMutation.isPending ? "Logging out..." : "Logout")}
+          {!collapsed &&
+            (logoutMutation.isPending ? "Logging out..." : "Logout")}
         </button>
       </div>
     </div>

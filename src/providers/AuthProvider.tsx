@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "@/backend/auth";
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
   user: any;
@@ -15,12 +16,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading, refetch } = useAuth();
   const [user, setUser] = useState<any>(null);
-
+  const router = useRouter();
   useEffect(() => {
     if (data?.userData) {
       setUser(data.userData);
     } else {
       setUser(null);
+      router.replace("/auth/login")
     }
   }, [data]);
 
