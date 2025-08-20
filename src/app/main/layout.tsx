@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useAuthContext } from "@/providers/AuthProvider";
-import Sidebar from "@/components/main/sidebar";
 import { motion } from "framer-motion";
 import { Wallet } from "lucide-react";
 import { useGetWallet } from "@/backend/wallet/wallet.query";
 import { usePathname } from "next/navigation";
+import BottomBar from "@/components/main/bottombar";
 
 export default function MainLayout({
   children,
@@ -24,34 +24,44 @@ export default function MainLayout({
   const pathname = usePathname();
 
   const hiddenRoutes = ["/main/account", "/main/wallet"];
-
   const shouldShowWallet =
     user && !hiddenRoutes.some((route) => pathname.startsWith(route));
 
   return (
-    <div className="flex h-screen relative">
-      {/* Sidebar */}
-      <Sidebar user={user} refetch={refetch} />
-
+    <div className="flex h-screen relative bg-gradient-to-b from-gray-50 to-white">
       {/* Main Content */}
-      <div className="flex-1 bg-white overflow-auto text-black relative">
-        {children}
+      <div className="flex-1 overflow-auto text-black relative pb-20"> 
+        {/* Page Transition */}
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+          className="max-w-4xl mx-auto px-4 py-6"
+        >
+          {children}
+        </motion.div>
 
-        {/* Floating Badge (Dynamic Island style) */}
+        {/* Floating Wallet Card */}
         {shouldShowWallet && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed top-4 right-4 bg-secondary text-white rounded-full shadow-lg z-50 flex items-center justify-center gap-2 px-4 py-2 cursor-pointer hover:scale-110 transition-all"
+            className="fixed top-5 right-5 bg-emerald-400 backdrop-blur-xl border border-emerald-200/50 shadow-md rounded-full z-50 flex items-center justify-center gap-2 px-4 py-2 cursor-pointer hover:scale-105 hover:shadow-lg transition-all"
           >
-            <Wallet />
-            <div className="font-bold">
-              ₹{walletData?.data?.amount.toLocaleString("en-IN")}
+            <Wallet className="text-white" />
+            <div className="font-semibold text-white">
+              {walletIsLoading || walletIsReFetching
+                ? "Loading..."
+                : `₹${walletData?.data?.amount.toLocaleString("en-IN")}`}
             </div>
           </motion.div>
         )}
       </div>
+
+      {/* Bottom Navigation */}
+      <BottomBar user={user} refetch={refetch} />
     </div>
   );
 }

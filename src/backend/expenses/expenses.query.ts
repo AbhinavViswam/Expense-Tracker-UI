@@ -1,8 +1,9 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { addExpense, getExpense } from "./expenses.api";
+import { addExpense, getCreditedExpense, getExpense } from "./expenses.api";
 import { IExpense } from "./expenses.types";
+import toast from "react-hot-toast";
 
 export const useGetExpenses = (dateRange: string = "daily") => {
   return useQuery({
@@ -11,14 +12,25 @@ export const useGetExpenses = (dateRange: string = "daily") => {
   });
 };
 
+export const useGetCreditedExpenses = (dateRange: string = "daily") => {
+  return useQuery({
+    queryKey: ["creditedexpenses", dateRange],
+    queryFn: () => getCreditedExpense(dateRange),
+  });
+};
+
 export const useAddExpense = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (expense: IExpense) => addExpense(expense),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      queryClient.invalidateQueries({ queryKey: ["creditedexpenses"] });
       queryClient.invalidateQueries({ queryKey: ["wallet"] });
+      toast.success("Added Successfully")
     },
+    onError : (error:any) => {
+      toast.error(error?.response?.data?.message);
+    }
   });
 };

@@ -64,55 +64,57 @@ function Page() {
   };
 
   return (
-    <section className="min-h-screen bg-white p-4 sm:p-6 md:p-8">
+    <section className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-emerald-50 p-6 md:p-10">
       {/* Wallet Balance Card */}
-      <div className="bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-2xl p-6 mb-8 shadow-lg flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <Wallet className="w-10 h-10" />
+      <div className="bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-3xl p-8 mb-10 shadow-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between backdrop-blur-xl">
+        <div className="flex items-center gap-4">
+          <div className="bg-white/20 p-3 rounded-2xl">
+            <Wallet className="w-10 h-10" />
+          </div>
           <div>
-            <h2 className="text-lg font-semibold">Wallet Balance</h2>
+            <h2 className="text-lg font-medium opacity-90">Wallet Balance</h2>
             {walletIsLoading || walletIsReFetching ? (
-             <span className="loading loading-bars loading-xl bg-emerald-600"></span>
+              <span className="loading loading-bars loading-lg bg-white"></span>
             ) : walletIsError ? (
               <p className="text-red-200">Failed to load balance</p>
             ) : (
-              <p className="text-3xl font-bold">
+              <p className="text-4xl font-bold tracking-wide">
                 ₹{walletData?.data?.amount.toLocaleString("en-IN")}
               </p>
             )}
           </div>
         </div>
         {walletData?.data?.updatedAt && (
-          <p className="mt-4 sm:mt-0 text-sm text-emerald-100">
+          <p className="mt-6 sm:mt-0 text-sm text-emerald-100">
             Last updated: {formatDate(walletData.data.updatedAt)}
           </p>
         )}
       </div>
 
-      <h1 className="text-2xl sm:text-3xl font-bold text-secondary mb-6">
+      <h1 className="text-3xl font-extrabold text-emerald-700 mb-6 text-center">
         Wallet Management
       </h1>
 
       {/* Input Section */}
-      <div className="w-full gap-3 bg-primary py-6 flex flex-col sm:flex-row items-center justify-center rounded-lg mb-4">
-        <div className="flex gap-1 items-center w-full border border-emerald-600 rounded-md p-1">
-          <IndianRupee className="text-emerald-700" />
+      <div className="bg-white shadow-xl rounded-2xl p-6 sm:p-8 flex flex-col gap-4 sm:flex-row mb-8 border border-emerald-100">
+        <div className="flex gap-2 items-center w-full border border-emerald-300 rounded-xl px-3 py-2 bg-emerald-50/30">
+          <IndianRupee className="text-emerald-600" />
           <input
             type="number"
             placeholder="Amount"
-            className="input w-full text-black bg-white"
+            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-400"
             value={amount}
             onChange={(e) =>
               setAmount(e.target.value ? Number(e.target.value) : "")
             }
           />
         </div>
-        <div className="flex gap-1 items-center w-full border border-emerald-600 rounded-md p-1">
-          <Notebook className="text-emerald-700" />
+        <div className="flex gap-2 items-center w-full border border-emerald-300 rounded-xl px-3 py-2 bg-emerald-50/30">
+          <Notebook className="text-emerald-600" />
           <input
             type="text"
             placeholder="Description"
-            className="input w-full text-black bg-white"
+            className="w-full bg-transparent focus:outline-none text-black placeholder:text-gray-400"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -120,19 +122,23 @@ function Page() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-4 justify-center items-center mb-8">
+      <div className="flex gap-6 justify-center mb-10">
         <button
-          className={`btn flex-1 bg-secondary text-white border-none hover:bg-secondary-focus ${
-            loading ? "loading" : ""
+          className={`flex-1 max-w-xs py-3 rounded-xl font-semibold text-lg shadow-lg transition transform hover:scale-[1.02] ${
+            loading
+              ? "loading"
+              : "bg-gradient-to-r from-emerald-500 to-green-600 text-white hover:opacity-90"
           }`}
           onClick={() => handleAction("add")}
           disabled={loading}
         >
-          Add
+          Add Money
         </button>
         <button
-          className={`btn flex-1 bg-red-500 text-white border-none hover:bg-red-600 ${
-            loading ? "loading" : ""
+          className={`flex-1 max-w-xs py-3 rounded-xl font-semibold text-lg shadow-lg transition transform hover:scale-[1.02] ${
+            loading
+              ? "loading"
+              : "bg-gradient-to-r from-red-500 to-rose-600 text-white hover:opacity-90"
           }`}
           onClick={() => handleAction("sub")}
           disabled={loading}
@@ -141,9 +147,9 @@ function Page() {
         </button>
       </div>
 
-      {/* Wallet Trace */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold text-secondary mb-4">
+      {/* Wallet History */}
+      <div className="bg-white shadow-xl rounded-2xl border border-gray-100 p-6">
+        <h2 className="text-2xl font-bold text-emerald-700 mb-6 text-center">
           Wallet History
         </h2>
 
@@ -157,32 +163,39 @@ function Page() {
           <p className="text-gray-500 text-center">No transactions yet.</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="table w-full border rounded-lg">
-              <thead className="bg-secondary text-white">
-                <tr>
-                  <th>#</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Date & Time</th>
+            <table className="table w-full border-separate border-spacing-y-2">
+              <thead>
+                <tr className="bg-emerald-600 text-white rounded-lg">
+                  <th className="rounded-l-lg px-4 py-3 text-left">#</th>
+                  <th className="px-4 py-3 text-left">Description</th>
+                  <th className="px-4 py-3 text-left">Amount</th>
+                  <th className="px-4 py-3 text-left">Status</th>
+                  <th className="rounded-r-lg px-4 py-3 text-left">
+                    Date & Time
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {data?.data?.map((tx: any, i: number) => (
-                  <tr key={tx._id}>
-                    <td>{i + 1}</td>
-                    <td>{tx.description}</td>
-                    <td>₹{tx.amount.toLocaleString("en-IN")}</td>
+                  <tr
+                    key={tx._id}
+                    className="bg-emerald-50 hover:bg-emerald-100 transition rounded-lg shadow-sm"
+                  >
+                    <td className="px-4 py-3">{i + 1}</td>
+                    <td className="px-4 py-3">{tx.description}</td>
+                    <td className="px-4 py-3 font-semibold">
+                      ₹{tx.amount.toLocaleString("en-IN")}
+                    </td>
                     <td
-                      className={
+                      className={`px-4 py-3 font-bold ${
                         tx.status === "credited"
-                          ? "text-emerald-600 font-semibold"
-                          : "text-red-600 font-semibold"
-                      }
+                          ? "text-emerald-600"
+                          : "text-red-600"
+                      }`}
                     >
                       {tx.status}
                     </td>
-                    <td>{formatDate(tx.createdAt)}</td>
+                    <td className="px-4 py-3">{formatDate(tx.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>
