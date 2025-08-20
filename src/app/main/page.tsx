@@ -21,6 +21,7 @@ import {
   Line,
 } from "recharts";
 import dayjs from "dayjs";
+import { PiggyBank, TrendingUp, Wallet } from "lucide-react";
 
 export default function Page() {
   const [dateRange, setDateRange] = useState("daily");
@@ -64,17 +65,76 @@ export default function Page() {
   const COLORS = generateColors(expenses.length);
 
   return (
-    <div className="max-w-6xl mx-auto p-4 sm:p-6 bg-white rounded-xl text-emerald-700 space-y-6 sm:space-y-12">
-      {/* Date Range Selector */}
-      <select
-        className="select bg-white select-bordered w-full mb-6 border-emerald-400 focus:ring-emerald-500 text-sm sm:text-base"
-        value={dateRange}
-        onChange={(e) => setDateRange(e.target.value)}
-      >
-        <option value="daily">Daily</option>
-        <option value="monthly">Monthly</option>
-        <option value="yearly">Yearly</option>
-      </select>
+    <div className="max-w-7xl mx-auto p-6 sm:p-8 bg-white rounded-xl text-emerald-700 space-y-10">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-emerald-900">
+            Expense Dashboard
+          </h1>
+          <p className="text-sm text-emerald-600">
+            Track your spending & monitor financial flow
+          </p>
+        </div>
+        {/* Date Range Selector */}
+        <div className="relative inline-flex items-center bg-white border border-emerald-300 rounded-full shadow-md px-4 py-2">
+          <label
+            htmlFor="dateRange"
+            className="text-emerald-600 font-medium mr-2 text-sm sm:text-base"
+          >
+            View:
+          </label>
+          <select
+            id="dateRange"
+            className="appearance-none bg-transparent focus:outline-none text-emerald-700 font-semibold cursor-pointer text-sm sm:text-base"
+            value={dateRange}
+            onChange={(e) => setDateRange(e.target.value)}
+          >
+            <option value="daily">Daily</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+          <svg
+            className="w-4 h-4 ml-2 text-emerald-600 pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {expenses.map((exp: any, idx: number) => (
+          <div
+            key={exp.categoryName}
+            className="p-6 rounded-2xl shadow-md bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 hover:shadow-lg transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-emerald-800">
+                  {exp.categoryName}
+                </h3>
+                <p className="text-2xl font-bold text-emerald-900 mt-1">
+                  ₹{exp.totalAmount}
+                </p>
+              </div>
+              <div className="p-3 rounded-full bg-emerald-100 text-emerald-700">
+                {idx % 2 === 0 ? (
+                  <Wallet size={22} />
+                ) : idx % 3 === 0 ? (
+                  <PiggyBank size={22} />
+                ) : (
+                  <TrendingUp size={22} />
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Bar Chart */}
       <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] card bg-white shadow-md p-4 border border-emerald-100">
@@ -151,7 +211,7 @@ export default function Page() {
             <h2 className="card-title text-emerald-700 text-base sm:text-lg">
               Credited Expenses
             </h2>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-64 overflow-y-auto">
               <table className="table text-sm sm:text-base">
                 <thead>
                   <tr className="bg-emerald-100 text-emerald-900">
@@ -182,7 +242,7 @@ export default function Page() {
             <h2 className="card-title text-emerald-800 text-base sm:text-lg">
               Debited Expenses
             </h2>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-64 overflow-y-auto">
               <table className="table text-sm sm:text-base">
                 <thead>
                   <tr className="bg-emerald-200 text-emerald-900">
