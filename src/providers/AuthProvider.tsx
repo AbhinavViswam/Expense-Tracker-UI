@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "@/backend/auth";
 import { useRouter } from "next/navigation";
-import { div } from "framer-motion/client";
+
 
 interface AuthContextType {
   user: any;
@@ -17,6 +17,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading, refetch } = useAuth();
   const [user, setUser] = useState<any>(null);
+  console.log("Data:",data);
+  console.log("user:",user);
   const router = useRouter();
   useEffect(() => {
     if (!isLoading) {
