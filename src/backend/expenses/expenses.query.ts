@@ -30,7 +30,8 @@ export const useAddExpense = () => {
       toast.success("Added Successfully")
     },
     onError : (error:any) => {
-      toast.error(error?.response?.data?.message);
+      console.log('error expense',error)
+      toast.error(error?.response?.data?.message || "expense not added");
     }
   });
 };
