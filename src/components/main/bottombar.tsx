@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useLogout } from "@/backend/user/user.query";
 import { useRouter, usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -9,7 +8,6 @@ import {
   Boxes,
   BadgeIndianRupee,
   User,
-  LogOut,
 } from "lucide-react";
 
 interface IBottomNav {
@@ -26,19 +24,9 @@ const menuItems = [
 ];
 
 const BottomBar = ({ user, refetch }: IBottomNav) => {
-  const logoutMutation = useLogout();
+  
   const router = useRouter();
   const pathname = usePathname();
-
-  const handleLogout = () => {
-    logoutMutation.mutate(undefined, {
-      onSuccess: () => {
-        refetch();
-        router.push("/auth/login");
-      },
-      onError: () => alert("Failed to logout. Please try again."),
-    });
-  };
 
   return (
     <div
@@ -79,20 +67,6 @@ const BottomBar = ({ user, refetch }: IBottomNav) => {
             </li>
           );
         })}
-
-        {/* Logout Button */}
-        <li>
-          <button
-            onClick={handleLogout}
-            disabled={logoutMutation.isPending}
-            className="flex flex-col md:flex-row md:gap-2 items-center text-xs sm:text-sm text-red-500 hover:text-red-600 transition px-3 py-1"
-          >
-            <LogOut size={22} />
-            <span className="mt-1 md:mt-0">
-              {logoutMutation.isPending ? "..." : "Logout"}
-            </span>
-          </button>
-        </li>
       </ul>
     </div>
   );
