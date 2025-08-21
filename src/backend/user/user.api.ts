@@ -1,7 +1,7 @@
 import { axiosClient } from "../axiosConfig";
 import { ILogin, ISignup } from "./user.types";
 
-const USER_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/user`;
+const USER_URL = `/user`;
 
 export const login = async ({ email, password }: ILogin) => {
   return await axiosClient.post(`${USER_URL}/login`, {

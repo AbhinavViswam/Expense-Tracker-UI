@@ -1,7 +1,7 @@
 import { axiosClient } from "../axiosConfig";
 import { IAddSubWallet } from "./wallet.types";
 
-const WALLET_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/wallet`;
+const WALLET_URL = `/wallet`;
 
 export const addToWallet = async ({ amount, description }: IAddSubWallet) => {
   return await axiosClient.post(`${WALLET_URL}/addtowallet`, {

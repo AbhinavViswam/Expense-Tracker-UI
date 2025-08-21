@@ -1,7 +1,7 @@
 import { axiosClient } from "../axiosConfig";
 import { IAddCategory, IDeleteCategory, IEditCategory } from "./category.types";
 
-const CATEGORY_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/category`;
+const CATEGORY_URL = `/category`;
 
 export const addCategory = async ({ categoryName }: IAddCategory) => {
   return await axiosClient.post(`${CATEGORY_URL}`, {

@@ -1,7 +1,7 @@
 import { axiosClient } from "../axiosConfig";
 import { IExpense } from "./expenses.types";
 
-const EXPENSE_URL = `${process.env.NEXT_PUBLIC_API_URL}/api/expense`;
+const EXPENSE_URL = `/expense`;
 
 export const addExpense = async ({
   amount,
