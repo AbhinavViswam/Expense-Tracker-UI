@@ -20,6 +20,7 @@ export default function LoginPage() {
       { email, password },
       {
         onSuccess: (res) => {
+          console.log(res.data);
           if (res.data?.data) {
             setUser(res.data.data);
             toast.success("Login successful!");
@@ -29,6 +30,7 @@ export default function LoginPage() {
           }
         },
         onError: (err: any) => {
+          console.log("err:",err);
           toast.error(err?.response?.data?.message || "Login failed");
         },
       }
