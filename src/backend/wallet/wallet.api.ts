@@ -7,6 +7,8 @@ export const addToWallet = async ({ amount, description }: IAddSubWallet) => {
   return await axiosClient.post(`${WALLET_URL}/addtowallet`, {
     amount,
     description,
+  },{
+    withCredentials:true
   });
 };
 
@@ -23,6 +25,6 @@ export const getWalletTrace = async () => {
 };
 
 export const getWallet = async () => {
-  const res = await axiosClient.get(`${WALLET_URL}/wallet`);
+  const res = await axiosClient.get(`${WALLET_URL}/wallet`,{withCredentials:true});
   return res.data;
 };
