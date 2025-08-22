@@ -30,7 +30,7 @@ export default function Page() {
     useGetCreditedExpenses(dateRange);
 
   if (isLoading || creditLoading) {
-    return <div className="p-6 text-center text-emerald-600">Loading...</div>;
+    return <div className="p-6 text-center text-emerald-600 h-screen w-full flex justify-center items-center"><span className="loading loading-bars loading-xl"></span></div>;
   }
 
   const expenses = data?.data || [];
@@ -77,14 +77,15 @@ export default function Page() {
           </p>
         </div>
         {/* Date Range Selector */}
-        <div className="relative inline-flex items-center bg-white border border-emerald-300 rounded-full shadow-md px-4 py-2">
+        <div className="relative inline-flex justify-between items-center bg-white border border-emerald-300 rounded-full shadow-md px-4 py-2">
           <label
             htmlFor="dateRange"
             className="text-emerald-600 font-medium mr-2 text-sm sm:text-base"
           >
             View:
           </label>
-          <select
+          <div className="flex items-center justify-center gap-1">
+            <select
             id="dateRange"
             className="appearance-none bg-transparent focus:outline-none text-emerald-700 font-semibold cursor-pointer text-sm sm:text-base"
             value={dateRange}
@@ -103,6 +104,7 @@ export default function Page() {
           >
             <path d="M19 9l-7 7-7-7" />
           </svg>
+          </div>
         </div>
       </div>
 
