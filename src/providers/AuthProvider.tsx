@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "@/backend/auth";
 import { useRouter } from "next/navigation";
 
-
 interface AuthContextType {
   user: any;
   isLoading: boolean;
@@ -17,8 +16,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data, isLoading, refetch } = useAuth();
   const [user, setUser] = useState<any>(null);
-  console.log("Data:",data);
-  console.log("user:",user);
+
   const router = useRouter();
   useEffect(() => {
     if (!isLoading) {

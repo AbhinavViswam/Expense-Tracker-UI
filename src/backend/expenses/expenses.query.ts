@@ -27,11 +27,10 @@ export const useAddExpense = () => {
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
       queryClient.invalidateQueries({ queryKey: ["creditedexpenses"] });
       queryClient.invalidateQueries({ queryKey: ["wallet"] });
-      toast.success("Added Successfully")
+      toast.success("Added Successfully");
     },
-    onError : (error:any) => {
-      console.log('error expense',error)
+    onError: (error: any) => {
       toast.error(error?.response?.data?.message || "expense not added");
-    }
+    },
   });
 };

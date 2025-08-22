@@ -17,7 +17,7 @@ interface IBottomNav {
 
 const menuItems = [
   { name: "Dashboard", icon: LayoutDashboard, path: "/main" },
-  { name: "Wallet", icon: Wallet, path: "/main/wallet" },
+  // { name: "Wallet", icon: Wallet, path: "/main/wallet" },
   { name: "Expenses", icon: BadgeIndianRupee, path: "/main/expense" },
   { name: "Category", icon: Boxes, path: "/main/category" },
   { name: "Account", icon: User, path: "/main/account" },

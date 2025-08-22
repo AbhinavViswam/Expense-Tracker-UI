@@ -28,8 +28,6 @@ export default function Page() {
   const { data, isLoading } = useGetExpenses(dateRange);
   const { data: creditData, isLoading: creditLoading } =
     useGetCreditedExpenses(dateRange);
-    console.log("data",data);
-    console.log("crdata",creditData);
 
   if (isLoading || creditLoading) {
     return <div className="p-6 text-center text-emerald-600">Loading...</div>;
