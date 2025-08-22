@@ -20,14 +20,15 @@ function Page() {
   const [categoryId, setCategoryId] = useState("");
   const [status, setStatus] = useState("debited");
 
-  const formatDateTimeLocal = (date: Date) => {
+  // format date -> YYYY-MM-DD
+  const formatDateLocal = (date: Date) => {
     const pad = (n: number) => n.toString().padStart(2, "0");
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
       date.getDate()
-    )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    )}`;
   };
 
-  const [date, setDate] = useState(formatDateTimeLocal(new Date()));
+  const [date, setDate] = useState(formatDateLocal(new Date()));
   const queryClient = useQueryClient();
   const { data: categories, isLoading } = useGetCategories();
   const addExpenseMutation = useAddExpense();
@@ -50,6 +51,7 @@ function Page() {
       categoryId: status === "debited" ? categoryId : undefined,
       description,
       status,
+      // save as ISO but without time (defaults to 00:00 UTC)
       createdAt: new Date(date).toISOString(),
     });
 
@@ -58,7 +60,7 @@ function Page() {
     setDescription("");
     setCategoryId("");
     setStatus("debited");
-    setDate(formatDateTimeLocal(new Date()));
+    setDate(formatDateLocal(new Date()));
   };
 
   return (
@@ -77,7 +79,7 @@ function Page() {
         {/* Amount */}
         <div className="relative group">
           <Wallet
-            className="absolute left-3 top-3 text-emerald-500 group-focus-within:text-emerald-600"
+            className="absolute left-3 top-3 text-emerald-500"
             size={18}
           />
           <input
@@ -94,7 +96,7 @@ function Page() {
         {/* Description */}
         <div className="relative group">
           <FileText
-            className="absolute left-3 top-3 text-emerald-500 group-focus-within:text-emerald-600"
+            className="absolute left-3 top-3 text-emerald-500"
             size={18}
           />
           <input
@@ -140,10 +142,7 @@ function Page() {
         {/* Category */}
         {status === "debited" && (
           <div className="relative group">
-            <Tag
-              className="absolute left-3 top-3 text-emerald-500 group-focus-within:text-emerald-600"
-              size={18}
-            />
+            <Tag className="absolute left-3 top-3 text-emerald-500" size={18} />
             <select
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl 
               bg-gray-50 text-emerald-700 focus:outline-none focus:ring-2 
@@ -163,25 +162,23 @@ function Page() {
           </div>
         )}
 
-        {/* Date */}
+        {/* Date (only day, no time) */}
         <div
-          className="relative group"
+          className="relative group cursor-pointer"
           onClick={() =>
-            (
-              document.getElementById("datetime") as HTMLInputElement
-            )?.showPicker?.()
+            (document.getElementById("date") as HTMLInputElement)?.showPicker()
           }
         >
           <Calendar
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500 pointer-events-none group-focus-within:text-emerald-600"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-500 pointer-events-none"
             size={18}
           />
           <input
-            id="datetime"
-            type="datetime-local"
+            id="date"
+            type="date"
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl 
-            text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 
-            shadow-sm transition cursor-pointer bg-gray-50"
+    text-black focus:outline-none focus:ring-2 focus:ring-emerald-500 
+    shadow-sm transition bg-gray-50"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />

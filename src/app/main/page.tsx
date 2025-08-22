@@ -24,7 +24,7 @@ import dayjs from "dayjs";
 import { PiggyBank, TrendingUp, Wallet } from "lucide-react";
 
 export default function Page() {
-  const [dateRange, setDateRange] = useState("daily");
+  const [dateRange, setDateRange] = useState("monthly");
   const { data, isLoading } = useGetExpenses(dateRange);
   const { data: creditData, isLoading: creditLoading } =
     useGetCreditedExpenses(dateRange);
@@ -41,14 +41,17 @@ export default function Page() {
 
   // Line chart data
   const lineData = creditedExpenses.map((exp: any) => ({
-    date:
-      dateRange === "daily"
-        ? dayjs(exp.createdAt).format("HH:mm")
-        : dateRange === "monthly"
-        ? dayjs(exp.createdAt).format("DD MMM")
-        : dayjs(exp.createdAt).format("MMM YYYY"),
-    amount: exp.amount,
-  }));
+  date:
+    dateRange === "daily"
+      ? dayjs(exp.createdAt).format("HH:mm")
+      : dateRange === "weekly"
+      ? dayjs(exp.createdAt).format("DD MMM") // show days in the week
+      : dateRange === "monthly"
+      ? dayjs(exp.createdAt).format("DD MMM")
+      : dayjs(exp.createdAt).format("MMM YYYY"),
+  amount: exp.amount,
+}));
+
 
   // Emerald palette generator
   const generateColors = (count: number) => {
@@ -91,7 +94,7 @@ export default function Page() {
             value={dateRange}
             onChange={(e) => setDateRange(e.target.value)}
           >
-            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
             <option value="yearly">Yearly</option>
           </select>

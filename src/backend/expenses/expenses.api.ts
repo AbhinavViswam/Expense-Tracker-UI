@@ -19,14 +19,14 @@ export const addExpense = async ({
   });
 };
 
-export const getExpense = async (dateRange: string = "daily") => {
+export const getExpense = async (dateRange: string = "monthly") => {
   const res = await axiosClient.get(
     `${EXPENSE_URL}/getexpense?dateRange=${dateRange}`
   );
   return res.data;
 };
 
-export const getCreditedExpense = async (dateRange: string = "daily") => {
+export const getCreditedExpense = async (dateRange: string = "monthly") => {
   const res = await axiosClient.get(
     `${EXPENSE_URL}/getcreditedexpense?dateRange=${dateRange}`
   );

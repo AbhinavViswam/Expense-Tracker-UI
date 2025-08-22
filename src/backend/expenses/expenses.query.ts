@@ -5,14 +5,14 @@ import { addExpense, getCreditedExpense, getExpense } from "./expenses.api";
 import { IExpense } from "./expenses.types";
 import toast from "react-hot-toast";
 
-export const useGetExpenses = (dateRange: string = "daily") => {
+export const useGetExpenses = (dateRange: string = "monthly") => {
   return useQuery({
     queryKey: ["expenses", dateRange],
     queryFn: () => getExpense(dateRange),
   });
 };
 
-export const useGetCreditedExpenses = (dateRange: string = "daily") => {
+export const useGetCreditedExpenses = (dateRange: string = "monthly") => {
   return useQuery({
     queryKey: ["creditedexpenses", dateRange],
     queryFn: () => getCreditedExpense(dateRange),
