@@ -50,7 +50,7 @@ function Page() {
       categoryId: status === "debited" ? categoryId : undefined,
       description,
       status,
-      createdAt: date,
+      createdAt: new Date(date).toISOString(),
     });
 
     queryClient.invalidateQueries({ queryKey: ["wallet"] });
