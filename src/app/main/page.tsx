@@ -22,10 +22,9 @@ import {
 } from "recharts";
 import dayjs from "dayjs";
 import { PiggyBank, TrendingUp, Wallet } from "lucide-react";
-import { div } from "framer-motion/client";
 
 export default function Page() {
-  const [dateRange, setDateRange] = useState("monthly");
+  const [dateRange, setDateRange] = useState("yearly");
   const { data, isLoading } = useGetExpenses(dateRange);
   const { data: creditData, isLoading: creditLoading } =
     useGetCreditedExpenses(dateRange);
