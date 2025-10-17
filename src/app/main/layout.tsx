@@ -7,6 +7,8 @@ import { Wallet } from "lucide-react";
 import { useGetWallet } from "@/backend/wallet/wallet.query";
 import { usePathname } from "next/navigation";
 import BottomBar from "@/components/main/bottombar";
+import { MailDropdown } from "@/components/main/MailComponent";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function MainLayout({
   children,
@@ -22,6 +24,11 @@ export default function MainLayout({
   } = useGetWallet();
 
   const pathname = usePathname();
+  const queryClient = useQueryClient();
+
+  setInterval(() => {
+    queryClient.invalidateQueries({ queryKey: ["mail"] });
+  }, 1000);
 
   const hiddenRoutes = ["/main/account", "/main/wallet"];
   const shouldShowWallet =
@@ -43,6 +50,11 @@ export default function MainLayout({
         </motion.div>
 
         {/* Floating Wallet Card */}
+        <motion.div
+         className="fixed top-5 right-40 z-50">
+
+        <MailDropdown/>
+        </motion.div>
         {shouldShowWallet && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
