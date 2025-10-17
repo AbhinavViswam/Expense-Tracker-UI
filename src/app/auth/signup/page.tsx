@@ -27,6 +27,7 @@ export default function SignupPage() {
     signupMutation.mutate(formData, {
       onSuccess: (res) => {
         if (res?.data?.data?.data) {
+          localStorage.setItem("token",res.data?.token)
           setUser(res.data.data.data);
           toast.success("Login successful!");
           router.push("/");

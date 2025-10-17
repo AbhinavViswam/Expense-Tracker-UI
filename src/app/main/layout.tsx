@@ -50,7 +50,7 @@ export default function MainLayout({
         </motion.div>
 
         {/* Floating Wallet Card */}
-        <motion.div
+        {/* <motion.div
          className="fixed top-5 right-40 z-50">
 
         <MailDropdown/>
@@ -69,7 +69,29 @@ export default function MainLayout({
                 : `₹${walletData?.data?.amount.toLocaleString("en-IN")}`}
             </div>
           </motion.div>
-        )}
+        )} */}
+        <motion.div
+  className="fixed top-5 right-5 z-50 flex items-center gap-4"
+>
+  <MailDropdown />
+
+  {shouldShowWallet && (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="bg-emerald-400 backdrop-blur-xl border border-emerald-200/50 shadow-md rounded-full flex items-center justify-center gap-2 px-4 py-2 cursor-pointer hover:scale-105 hover:shadow-lg transition-all"
+    >
+      <Wallet className="text-white" />
+      <div className="font-semibold text-white text-sm sm:text-base">
+        {walletIsLoading || walletIsReFetching
+          ? "Loading..."
+          : `₹${walletData?.data?.amount.toLocaleString("en-IN")}`}
+      </div>
+    </motion.div>
+  )}
+</motion.div>
+
       </div>
 
       {/* Bottom Navigation */}

@@ -21,6 +21,7 @@ export default function LoginPage() {
       {
         onSuccess: (res) => {
           if (res.data?.data) {
+            localStorage.setItem("token",res.data?.token)
             setUser(res.data.data);
             toast.success("Login successful!");
             router.push("/");
