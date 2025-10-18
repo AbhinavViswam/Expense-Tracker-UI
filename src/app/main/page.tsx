@@ -21,7 +21,7 @@ import {
   Line,
 } from "recharts";
 import dayjs from "dayjs";
-import { PiggyBank, TrendingUp, Wallet } from "lucide-react";
+import { FileX, PiggyBank, TrendingUp, Wallet } from "lucide-react";
 
 export default function Page() {
   const [dateRange, setDateRange] = useState("yearly");
@@ -69,6 +69,7 @@ export default function Page() {
     });
   };
   const COLORS = generateColors(expenses.length);
+  const hasAnyData = expenses.length > 0 || creditedExpenses.length > 0 || debitedExpenses.length > 0;
 
   return (
     <div className="max-w-7xl mx-auto p-6 sm:p-8 bg-white rounded-xl text-emerald-700 space-y-10">
@@ -113,6 +114,21 @@ export default function Page() {
           </div>
         </div>
       </div>
+
+      {!hasAnyData && (
+        <div className="flex flex-col items-center justify-center py-20 px-4">
+          <div className="p-6 rounded-full bg-emerald-50 mb-6">
+            <FileX size={64} className="text-emerald-400" />
+          </div>
+          <h2 className="text-2xl font-bold text-emerald-900 mb-2">
+            No Data Available
+          </h2>
+          <p className="text-emerald-600 text-center max-w-md">
+            There are no expense records to display for the selected time period. 
+            Start tracking your expenses to see insights here.
+          </p>
+        </div>
+      )}
 
       {/* Summary Cards */}
       {expenses.length !== 0 && (
