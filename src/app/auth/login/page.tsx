@@ -139,6 +139,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 className="text-sm text-emerald-600 hover:text-emerald-700 transition-colors duration-200 font-medium"
+                onClick={()=>router.push("https://www.wikihow.com/Remember-Something-That-You-Forgot")}
               >
                 Forgot password?
               </button>
